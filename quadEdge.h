@@ -1,7 +1,10 @@
 
 class site;
 
-class orient;
+#define e_ROT 0
+#define e_SYM 1
+#define e_ROTINV 2
+#define e_IDEN 3
 
 class quadEdge
 {
@@ -10,7 +13,7 @@ class quadEdge
 		quadEdge(void);
 		~quadEdge(void);
 
-		//
+		// members
 		site* getOrig(void) const;
 		site* getDest(void) const;
 		void setOrig(site* orig);
@@ -39,5 +42,7 @@ class quadEdge
 	private:
 		site* origSite;
 		quadEdge* eOnext;
+		orientEdge orientation;
+		quadEdge** orientationEdgeList;
 
 };

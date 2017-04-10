@@ -2,7 +2,19 @@
 #include "dcel.h"
 
 
-quadEdge::quadEdge(void){
+quadEdge::quadEdge(void) : 
+	origSite(NULL), 
+	eOnext(NULL), 
+	orientation(0), 
+	orientationEdgeList(new quadEdge*[4])
+{
+	for (int i=1; i<4; i++){
+		orientationEdgeList[i] = 
+	}
+	m_Onext = this;
+	geteRot()->setOnext(geteRotInv());
+	geteSym()->setOnext(geteSym());
+	geteRotInv()->setOnext(geteRot());
 }
 
 quadEdge::~quadEdge(void){
@@ -30,11 +42,20 @@ site* quadEdge::getDest(void) const{
 }
 
 // pointers
-quadEdge* quadEdge::geteSym(void) const;
+quadEdge* quadEdge::geteSym(void) const{
+	int id = (int(orientation)+e_SYM) % 4;
+	return orientationEdgeList[id]
+}
 
-quadEdge* quadEdge::geteRot(void) const;
+quadEdge* quadEdge::geteRot(void) const{
+	int id = (int(orientation)+e_ROT) % 4;
+	return orientationEdgeList[id]
+}
 
-quadEdge* quadEdge::geteRotInv(void) const;
+quadEdge* quadEdge::geteRotInv(void) const{
+	int id = (int(orientation)+e_ROTINV) % 4;
+	return orientationEdgeList[id]
+}
 
 quadEdge* quadEdge::geteRnext(void) const{
 	return geteRot()->geteOnext()->geteRotInv();
@@ -69,7 +90,6 @@ quadEdge* quadEdge::geteDprev(void) const{
 }
 
 void quadEdge::splice(quadEdge* b){
-
 }
 
 quadEdge* quadEdge::connect(quadEdge* b){
@@ -87,3 +107,4 @@ void quadEdge::deleteEdge(void){
 	quadEdge* eSym = geteSym();
 	eSym->splice(eSym->geteOprev());
 }
+
