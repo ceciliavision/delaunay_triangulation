@@ -1,16 +1,19 @@
 
 class site;
 
-#define e_ROT 0
-#define e_SYM 1
-#define e_ROTINV 2
-#define e_IDEN 3
+// #define e_ROT 0
+// #define e_SYM 1
+// #define e_ROTINV 2
+// #define e_IDEN 3
+
+enum orientEdge {e_ROT=0, e_SYM=1, e_ROTINV=2, e_IDEN=3}
 
 class quadEdge
 {
 	public:
 		// Constructor & destructor
 		quadEdge(void);
+		quadEdge(quadEdge** orientationEdgeList, orientEdge orientation);
 		~quadEdge(void);
 
 		// members

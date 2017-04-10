@@ -1,24 +1,43 @@
 #include "quadEdge.h"
-#include "dcel.h"
-
 
 quadEdge::quadEdge(void) : 
-	origSite(NULL), 
+	origSite(0), 
 	eOnext(NULL), 
-	orientation(0), 
+	orientEdge(e_IDEN), 
 	orientationEdgeList(new quadEdge*[4])
 {
-	for (int i=1; i<4; i++){
-		orientationEdgeList[i] = 
+	// pre-allocate space
+	for (int i=0; i<4; i++){
+		orientationEdgeList[i] = this;
 	}
-	m_Onext = this;
+	eOnext = this;
+
+	// actually assign quad edge
+	for (int i=1; i<4; i++){
+		orientationEdgeList[i] = new quadEdge(orientationEdgeList, (orientEdge)i);
+	}
+	
 	geteRot()->setOnext(geteRotInv());
 	geteSym()->setOnext(geteSym());
 	geteRotInv()->setOnext(geteRot());
 }
 
-quadEdge::~quadEdge(void){
+quadEdge::quadEdge(quadEdge** orientationEdgeList, orientEdge orientation):
+	origSite(0), 
+	eOnext(NULL), 
+	orientEdge(orientation), 
+	orientationEdgeList(orientationEdgeList)
+{
+}
 
+quadEdge::~quadEdge(void){
+	if (orientation==e_IDEN){
+		for (int i=1; i<4; i++){
+			quadEdge* this_edge = orientationEdgeList[i];
+			delete[] this_edge;
+		}
+		delete[] orientationEdgeList[0];
+	}
 }
 
 void quadEdge::setOrig(site* orig){
@@ -90,6 +109,18 @@ quadEdge* quadEdge::geteDprev(void) const{
 }
 
 void quadEdge::splice(quadEdge* b){
+	quadEdge* alpha = geteOnext()->geteRot();
+	quadEdge* beta = b->geteOnext()->geteRot();
+
+	quadEdge* aonext_new = b->geteOnext();
+	quadEdge* bonext_new = geteOnext();
+	seteOnext(aonext_new);
+	b->seteOnext(bonext_new);
+
+	quadEdge* alphaonext_new beta->geteOnext();
+	quadEdge* betaonext_new alpha->geteOnext();
+	alpha->seteOnext(alphaonext_new);
+	beta->seteOnext(betaonext_new);
 }
 
 quadEdge* quadEdge::connect(quadEdge* b){
