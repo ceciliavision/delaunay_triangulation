@@ -1,6 +1,6 @@
 #include "quadEdge.h"
 
-quadEdge::quadEdge(void) : 
+quadEdge::quadEdge(void): 
 	origSite(0), 
 	eOnext(NULL), 
 	orientEdge(e_IDEN), 
@@ -58,6 +58,10 @@ site* quadEdge::getOrig(void) const{
 
 site* quadEdge::getDest(void) const{
 	return geteSym()->getOrig();
+}
+
+quadEdge** getEdgeList(void) const{
+	return orientationEdgeList;
 }
 
 // pointers
@@ -137,5 +141,10 @@ void quadEdge::deleteEdge(void){
 	splice(geteOprev());
 	quadEdge* eSym = geteSym();
 	eSym->splice(eSym->geteOprev());
+}
+
+bool isValid(quadEdge* edge, quadEdge* basel)
+{
+	return edge->getDest()->rightOf(*basel);
 }
 

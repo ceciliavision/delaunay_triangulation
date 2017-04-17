@@ -1,3 +1,5 @@
+#ifndef _quadEdge_H_
+#define _quadEdge_H_
 
 class site;
 
@@ -13,12 +15,12 @@ class quadEdge
 	public:
 		// Constructor & destructor
 		quadEdge(void);
-		quadEdge(quadEdge** orientationEdgeList, orientEdge orientation);
 		~quadEdge(void);
 
 		// members
 		site* getOrig(void) const;
 		site* getDest(void) const;
+		quadEdge** getEdgeList(void) const;
 		void setOrig(site* orig);
 		void setDest(site* dest);
 		void seteOnext(quadEdge* onext);
@@ -37,15 +39,20 @@ class quadEdge
 		quadEdge* geteDprev(void) const;
 		
 		// Basic topological operators
-		void deleteEdge(quadEdge* a);
+		void deleteEdge(void);
 		void splice(quadEdge* b);
 		quadEdge* connect(quadEdge* b);
 
 
 	private:
+		quadEdge(quadEdge** orientationEdgeList, orientEdge orientation);
 		site* origSite;
 		quadEdge* eOnext;
 		orientEdge orientation;
 		quadEdge** orientationEdgeList;
 
 };
+
+bool isValid(quadEdge* edge, quadEdge* basel);
+
+#endif
