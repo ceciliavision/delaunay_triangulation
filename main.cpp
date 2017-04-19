@@ -3,6 +3,8 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
+#include <cstdio>
+#include <ctime>
 
 #include "quadEdge.h"
 #include "site.h"
@@ -13,7 +15,6 @@
 // the constructor and destructor
 // files and parse, and sort
 // output
-// add timer
 
 using namespace std;
 
@@ -40,7 +41,13 @@ int main(int argc, char** argv)
 		sites.push_back(new site(p1, p2));
 	}
 
+	// use std::sort, with self-defined sorting scheme
+	sort(sites.begin(), sites.end(), siteLessPredicate);
+
+	clock_t start = clock();
 	// delaunay delaunay(sites);
+	double duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+    cout<<"Delaunay Triangulation takes (in s): "<< duration <<'\n';
 
 	//
 	vector<site*>::iterator site_s = sites.begin();

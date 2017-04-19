@@ -20,4 +20,7 @@ class site
 		bool leftOf(const quadEdge& edge);
 };
 
+// customized comparator
+bool siteLessPredicate (site* a, site* b);
+
 #endif

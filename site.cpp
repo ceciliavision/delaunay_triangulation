@@ -46,3 +46,21 @@ bool site::leftOf(const quadEdge& edge)
 {
 	return orient2D( edge.getOrig(), edge.getDest() );
 }
+
+// lexicographic sorting
+bool siteLessPredicate (site* a, site* b)
+{
+	float avx = a->vx;
+	float bvx = b->vx;
+	float avy = a->vy;
+	float bvy = b->vy;
+
+	if (avx == bvx){
+		return avy < bvy;
+	}
+	else{
+		return avx < bvx;
+	}
+
+}
+
