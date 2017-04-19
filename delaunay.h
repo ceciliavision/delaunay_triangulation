@@ -13,7 +13,7 @@ class delaunay
 	public:
 		quadEdge* le;
 		quadEdge* re;
-		divideConquer (const std::vector<Site*>& S, int lstart, int lcount, quadEdge* &le, quadEdge* &re);
-}
-
+		void divideConquer (const std::vector<site*>& S, int lstart, int lcount, quadEdge* &le, quadEdge* &re);
+};
+ 
 #endif

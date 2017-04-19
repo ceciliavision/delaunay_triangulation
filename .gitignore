@@ -1,0 +1,12 @@
+# all the data files
+data/*
+data_fun/*
+
+# triangle software
+triangle/*
+
+# all compiled files
+*.o
+
+# DS_Store files for Mac
+.DS_Store

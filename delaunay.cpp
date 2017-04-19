@@ -2,13 +2,16 @@
 #include "quadEdge.h"
 #include "delaunay.h"
 
-//
-
+// construct the delaunay object
 delaunay::delaunay (const std::vector<site*>& sites):
-	le(le),
-	re(re)
+	le(NULL),
+	re(NULL)
 {
 	divideConquer(sites, 0, sites.size(), le, re);
+}
+
+delaunay::~delaunay (void)
+{	
 }
 
 void delaunay::divideConquer (const std::vector<site*>& sites, int lstart, int count, quadEdge* &le, quadEdge* &re)
@@ -21,7 +24,7 @@ void delaunay::divideConquer (const std::vector<site*>& sites, int lstart, int c
 		a->setOrig(s1);
 		a->setDest(s2);
 		le = a;
-		rd = a->geteSym();
+		re = a->geteSym();
 	}
 
 	// { let s1, s2, s3 be the three sites, in sorted order }
@@ -40,8 +43,8 @@ void delaunay::divideConquer (const std::vector<site*>& sites, int lstart, int c
 		b->setDest(s3);
 		
 		// { now close the triangle}
-		if s1->orient2D (s2, s3){
-			quadEdge* c = b->connect(a);
+		if (s1->orient2D (s2, s3)){
+			// quadEdge* c = b->connect(a);
 			le = a;
 			re = b->geteSym();
 			return;
@@ -61,7 +64,10 @@ void delaunay::divideConquer (const std::vector<site*>& sites, int lstart, int c
 
 	// { L and R be the left and right halves of S. }
 	else{
-		quadEdge* ldo, ldi, rdi, rdo;
+		quadEdge* ldo = NULL;
+		quadEdge* ldi = NULL;
+		quadEdge* rdi = NULL;
+		quadEdge* rdo = NULL;
 		int lcount = count/2;
 		int rcount = count - lcount;
 		int rstart = lstart + lcount;
@@ -71,7 +77,7 @@ void delaunay::divideConquer (const std::vector<site*>& sites, int lstart, int c
 		// { compute the lower common tangent of L and R }
 		while(1)
 		{
-			if rdi->getOrig()->leftOf(*ldi){
+			if (rdi->getOrig()->leftOf(*ldi)){
 				ldi = ldi->geteLnext();
 			}
 			else if (ldi->getOrig()->rightOf(*rdi)){
@@ -84,10 +90,10 @@ void delaunay::divideConquer (const std::vector<site*>& sites, int lstart, int c
 		
 		// { create a first cross edge basel from rdi.org to ldi.org }
 		quadEdge* basel = rdi->geteSym()->connect(ldi);
-		if ldi->getOrig() == ldo->getOrig(){
+		if (ldi->getOrig() == ldo->getOrig()){
 			ldo = basel->geteSym();
 		}
-		if rdi->getOrig() == rdo->getOrig(){
+		if (rdi->getOrig() == rdo->getOrig()){
 			rdo = basel;
 		}
 
@@ -96,24 +102,24 @@ void delaunay::divideConquer (const std::vector<site*>& sites, int lstart, int c
 		// { and delete L edges out of basel.Dest that fail the circle test }
 		while(1)
 		{
-			quadEdge* lcand = basel->geteSym()->geteOnext;
-			if isValid (lcand, basel){
-				while (lcand->geteOnext()->inCircle(basel->getDest(), basel->getOrig(), lcand->getDest())){
+			quadEdge* lcand = basel->geteSym()->geteOnext();
+			if (isValid (lcand, basel)){
+				while (lcand->geteOnext()->getDest()->inCircle(basel->getDest(), basel->getOrig(), lcand->getDest())){
 					quadEdge* t = lcand->geteOnext();
 					lcand->deleteEdge();
-					delete lcand->getEdgeList[0];
+					delete lcand->getEdgeList();
 					lcand = t;
 				}
 			}
 
 			// { symmetrically, locate the first R points to be hit, and delete R edges }
 			quadEdge* rcand = basel->geteOprev();
-			if isValid(rcand, basel){
+			if (isValid(rcand, basel)){
 				while (rcand->geteOprev()->getDest()->inCircle (basel->getDest(), basel->getOrig(), rcand->getDest())){
 					quadEdge* t = rcand->geteOprev();
 					rcand->deleteEdge();
-					delete rcand->getEdgeList[0];
-					quadEdge* rcand = t;
+					delete rcand->getEdgeList();
+					rcand = t;
 				}
 			}
 
@@ -123,15 +129,15 @@ void delaunay::divideConquer (const std::vector<site*>& sites, int lstart, int c
 			}
 
 			// { the next cross edge is to be connected to either lcand.dest or rcand.dest }
-			// { if both are valid, then choose the appropriate one using the inCirle test }
-			if !isValid(lcand, basel) || (isValid(rcand, basel) && 
-				rcand->getDest()->inCirle( lcand->getDest(), lcand->getOrig(), rcand->getOrig())){
+			// { if both are valid, then choose the appropriate one using the inCircle test }
+			if (!isValid(lcand, basel) || (isValid(rcand, basel) && 
+				rcand->getDest()->inCircle( lcand->getDest(), lcand->getOrig(), rcand->getOrig()))){
 				// { add cross edge basel from rcand.dest to basel.dest }
-				basel = rcand->connet(basel->geteSym());
+				basel = rcand->connect(basel->geteSym());
 			}
 			else{
 				// { add cross edge basel from basel.org to lcand.dest }
-				basel = basel->geteSym()->connet(lcand->geteSym());
+				basel = basel->geteSym()->connect(lcand->geteSym());
 			}
 		}
 		le = ldo;

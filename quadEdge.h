@@ -3,12 +3,10 @@
 
 class site;
 
-// #define e_ROT 0
-// #define e_SYM 1
-// #define e_ROTINV 2
-// #define e_IDEN 3
-
-enum orientEdge {e_ROT=0, e_SYM=1, e_ROTINV=2, e_IDEN=3}
+#define e_IDEN 0
+#define e_ROT 1
+#define e_SYM 2
+#define e_ROTINV 3
 
 class quadEdge
 {
@@ -20,7 +18,7 @@ class quadEdge
 		// members
 		site* getOrig(void) const;
 		site* getDest(void) const;
-		quadEdge** getEdgeList(void) const;
+		quadEdge* getEdgeList(void) const;
 		void setOrig(site* orig);
 		void setDest(site* dest);
 		void seteOnext(quadEdge* onext);
@@ -45,10 +43,10 @@ class quadEdge
 
 
 	private:
-		quadEdge(quadEdge** orientationEdgeList, orientEdge orientation);
+		quadEdge(quadEdge** orientationEdgeList, int orientation);
 		site* origSite;
 		quadEdge* eOnext;
-		orientEdge orientation;
+		int orientation;
 		quadEdge** orientationEdgeList;
 
 };

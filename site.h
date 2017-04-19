@@ -1,6 +1,8 @@
 #ifndef _site_H_
 #define _site_H_
 
+#define myEPS 1e-6;
+
 class quadEdge;
 
 class site
@@ -15,7 +17,7 @@ class site
 		bool orient2D(site* b, site* c);
 		bool inCircle(site* a, site* b, site* c);
 		bool rightOf(const quadEdge& edge);
-		bool lightOf(const quadEdge& edge);
+		bool leftOf(const quadEdge& edge);
 };
 
 #endif

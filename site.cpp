@@ -13,7 +13,7 @@ bool site::orient2D (site* b, site* c){
 	float detleft = (vx - c->vx) * (b->vy - c->vy);
 	float detright = (vy - c->vy) * (b->vx - c->vx);
 	float det = detleft - detright;
-	return det > 0;
+	return det > myEPS;
 }
 
 bool site::inCircle(site* a, site* b, site* c)
@@ -34,7 +34,7 @@ bool site::inCircle(site* a, site* b, site* c)
 
 	float det = alift * bcdet + blift * cadet + clift * abdet;
 
-	return det > 0;
+	return det > myEPS;
 }
 
 bool site::rightOf(const quadEdge& edge)
@@ -44,5 +44,5 @@ bool site::rightOf(const quadEdge& edge)
 
 bool site::leftOf(const quadEdge& edge)
 {
-	return orient2D(edge.getOrig(), edge.getDest());
+	return orient2D( edge.getOrig(), edge.getDest() );
 }
