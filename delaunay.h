@@ -6,14 +6,16 @@
 class site;
 class quadEdge;
 
+using namespace std;
+
 class delaunay
 {
-	delaunay (const std::vector<site*>& sites);
-	~delaunay (void);
 	public:
+		delaunay (const vector<site*>& sites);
+		~delaunay (void);
 		quadEdge* le;
 		quadEdge* re;
-		void divideConquer (const std::vector<site*>& S, int lstart, int lcount, quadEdge* &le, quadEdge* &re);
+		void divideConquer (const vector<site*>& s, int lstart, int lcount, quadEdge* &le, quadEdge* &re);
 };
  
 #endif

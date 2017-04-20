@@ -10,3 +10,8 @@ triangle/*
 
 # DS_Store files for Mac
 .DS_Store
+
+# output txt files
+output*.txt
+*.ele
+*.node

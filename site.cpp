@@ -1,7 +1,8 @@
 #include "site.h"
 #include "quadEdge.h"
 
-site::site(float x, float y):
+site::site(int i, float x, float y):
+	index(i),
 	vx(x),
 	vy(y)
 {}

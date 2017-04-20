@@ -2,8 +2,10 @@
 #include "quadEdge.h"
 #include "delaunay.h"
 
+using namespace std;
+
 // construct the delaunay object
-delaunay::delaunay (const std::vector<site*>& sites):
+delaunay::delaunay (const vector<site*>& sites):
 	le(NULL),
 	re(NULL)
 {
@@ -11,10 +13,9 @@ delaunay::delaunay (const std::vector<site*>& sites):
 }
 
 delaunay::~delaunay (void)
-{	
-}
+{}
 
-void delaunay::divideConquer (const std::vector<site*>& sites, int lstart, int count, quadEdge* &le, quadEdge* &re)
+void delaunay::divideConquer (const vector<site*>& sites, int lstart, int count, quadEdge* &le, quadEdge* &re)
 {
 	// { let s1, s2 be the two sites, in sorted order. Create an edge a from s1 to s2 }
 	if (count == 2){
@@ -144,3 +145,4 @@ void delaunay::divideConquer (const std::vector<site*>& sites, int lstart, int c
 		re = rdo;
 	}
 }
+

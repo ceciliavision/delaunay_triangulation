@@ -1,4 +1,4 @@
-OBJS = main.o delaunay.o site.o quadEdge.o
+OBJS = main.o delaunay.o traverse.o site.o quadEdge.o
 CC = g++
 DEBUG = -g
 CFLAGS = -Wall -c $(DEBUG)
@@ -12,6 +12,9 @@ main.o : main.cpp delaunay.h site.h quadEdge.h
 
 delaunay.o : delaunay.h delaunay.cpp
 	$(CC) $(CFLAGS) delaunay.cpp
+
+traverse.o : traverse.h traverse.cpp
+	$(CC) $(CFLAGS) traverse.cpp
 
 site.o : site.h site.cpp 
 	$(CC) $(CFLAGS) site.cpp

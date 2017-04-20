@@ -8,10 +8,11 @@ class quadEdge;
 class site
 {
 	public:
+		int index;
 		float vx;
 		float vy;
 
-		site(float x, float y);
+		site(int i, float x, float y);
 		~site(void);
 
 		bool orient2D(site* b, site* c);
