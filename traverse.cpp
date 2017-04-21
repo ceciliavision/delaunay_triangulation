@@ -4,6 +4,7 @@
 #include <iostream>
 
 using namespace std;
+int NUM_TRI = 0;
 
 traverse::traverse(quadEdge* startedge):
 	num_triangle(0)
@@ -25,7 +26,6 @@ traverse::~traverse(void)
 void traverse::traversal(quadEdge* startedge)
 {
 	/// Check if this startedge is already walked
-	int num_tri = 0;
 	while (pastEdgeDict.count(startedge->getEdgeList()) == 0)
 	{
 		if( !traversedTri(startedge) )
@@ -33,8 +33,8 @@ void traverse::traversal(quadEdge* startedge)
 			cout << startedge->getOrig()->index << "  " 
 			<< startedge->geteLnext()->getOrig()->index << "  "
 			<< startedge->geteLnext()->geteLnext()->getOrig()->index << endl;
-			num_tri ++;
-			setNumtri(num_tri);
+			NUM_TRI ++;
+			setNumtri(NUM_TRI);
 		}
 
 		pastEdgeDict[startedge->getEdgeList()] = true;
@@ -53,17 +53,16 @@ void traverse::traversal(quadEdge* startedge)
 void traverse::traversal_tofile(quadEdge* startedge, ostream &os)
 {
 	/// Check if this startedge is already walked
-	int num_tri = 0;
 	while (pastEdgeDict.count(startedge->getEdgeList()) == 0)
 	{
 		if( !traversedTri(startedge) )
 		{
 			// output to a given file, to a .ele file
-			os << "   " << num_tri+1 << "    " << startedge->getOrig()->index << "  " 
+			os << "   " << NUM_TRI+1 << "    " << startedge->getOrig()->index << "  " 
 			<< startedge->geteLnext()->getOrig()->index << "  "
 			<< startedge->geteLnext()->geteLnext()->getOrig()->index << endl;
-			num_tri ++;
-			setNumtri(num_tri);
+			NUM_TRI ++;
+			setNumtri(NUM_TRI);
 		}
 
 		pastEdgeDict[startedge->getEdgeList()] = true;
