@@ -15,3 +15,6 @@ triangle/*
 output*.txt
 *.ele
 *.node
+
+# application
+dt*

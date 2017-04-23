@@ -15,7 +15,7 @@ traverse::traverse(quadEdge* startedge):
 traverse::traverse(quadEdge* startedge, ostream &os):
 	num_triangle(0)
 {
-	os << 0 << "  " << 3 << "  " << 0 << endl;
+	os << 00000000000 << "  " << 3 << "  " << 0 << endl;
 	traversal_tofile(startedge, os);
 }
 
