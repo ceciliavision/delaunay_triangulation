@@ -1,5 +1,6 @@
-# delaunay_triangulation
+# Delaunay Triangulation
+Quad-edge data structure with divide-conquer method
 
-# to make the target, in the root directory, type:
+# To make the target, in the root directory, type:
 make
 
